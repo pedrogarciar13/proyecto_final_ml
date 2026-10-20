@@ -1,0 +1,43 @@
+# Reglas del árbol final. le_deja_al_mes_COP está en escala log1p:
+# pesos = exp(umbral) - 1 (p. ej. 13,31 -> $603.000 aprox.).
+
+|--- edad_propietario <= 40.50
+|   |--- edad_propietario <= 30.50
+|   |   |--- le_deja_al_mes_COP <= 14.50
+|   |   |   |--- le_deja_al_mes_COP <= 12.40
+|   |   |   |   |--- class: Alto
+|   |   |   |--- le_deja_al_mes_COP >  12.40
+|   |   |   |   |--- class: Alto
+|   |   |--- le_deja_al_mes_COP >  14.50
+|   |   |   |--- class: Medio
+|   |--- edad_propietario >  30.50
+|   |   |--- le_deja_al_mes_COP <= 13.31
+|   |   |   |--- visible_desde_la_calle_Sí <= 0.50
+|   |   |   |   |--- class: Medio
+|   |   |   |--- visible_desde_la_calle_Sí >  0.50
+|   |   |   |   |--- class: Alto
+|   |   |--- le_deja_al_mes_COP >  13.31
+|   |   |   |--- visible_desde_la_calle_No aplica <= 0.50
+|   |   |   |   |--- class: Medio
+|   |   |   |--- visible_desde_la_calle_No aplica >  0.50
+|   |   |   |   |--- class: Bajo
+|--- edad_propietario >  40.50
+|   |--- le_deja_al_mes_COP <= 11.79
+|   |   |--- tiene_ayudantes_Sí <= 0.50
+|   |   |   |--- donde_funciona_Ambulante (calle) <= 0.50
+|   |   |   |   |--- class: Alto
+|   |   |   |--- donde_funciona_Ambulante (calle) >  0.50
+|   |   |   |   |--- class: Bajo
+|   |   |--- tiene_ayudantes_Sí >  0.50
+|   |   |   |--- class: Bajo
+|   |--- le_deja_al_mes_COP >  11.79
+|   |   |--- edad_propietario <= 56.50
+|   |   |   |--- le_deja_al_mes_COP <= 13.59
+|   |   |   |   |--- class: Medio
+|   |   |   |--- le_deja_al_mes_COP >  13.59
+|   |   |   |   |--- class: Bajo
+|   |   |--- edad_propietario >  56.50
+|   |   |   |--- le_deja_al_mes_COP <= 13.37
+|   |   |   |   |--- class: Bajo
+|   |   |   |--- le_deja_al_mes_COP >  13.37
+|   |   |   |   |--- class: Bajo

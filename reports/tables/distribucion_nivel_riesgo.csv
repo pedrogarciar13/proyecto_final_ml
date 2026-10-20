@@ -1,0 +1,4 @@
+,regla,registros,porcentaje,min,max,median
+Alto,1 <= meses_abierto <= 11,1224,16.27,1.0,11.0,6.0
+Medio,12 <= meses_abierto <= 42,2200,29.24,12.0,42.0,24.0
+Bajo,meses_abierto >= 43,4099,54.49,43.0,500.0,120.0

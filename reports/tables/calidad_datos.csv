@@ -1,0 +1,17 @@
+columna,tipo,nulos,valores_unicos,ejemplo
+id_negocio,int64,0,7523,1
+donde_funciona,str,0,8,Ambulante (calle)
+como_lleva_cuentas,str,0,5,"Cuaderno, Excel o caja"
+tiene_ayudantes,str,0,2,No
+meses_abierto,int64,0,264,60
+acepta_transferencias,str,0,2,No
+tiene_nombre_comercial,str,0,2,No
+registrado_camara_comercio,str,0,2,No
+tiene_RUT,str,0,2,No
+visible_desde_la_calle,str,0,3,Sí
+usa_internet,str,0,2,No
+tiene_redes_sociales,str,0,2,No
+zona,str,0,2,Cabecera (urbana)
+edad_propietario,int64,0,74,41
+le_deja_al_mes_COP,int64,0,703,650000
+riesgo_financiero,str,0,2,No

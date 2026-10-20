@@ -1,0 +1,44 @@
+{
+  "vendedor_ambulante_joven": {
+    "nivel_riesgo": "Alto",
+    "puntajes_por_clase": {
+      "Alto": 0.538,
+      "Medio": 0.3654,
+      "Bajo": 0.0966
+    },
+    "reglas_aplicadas": [
+      "Edad del propietario de hasta 40 años",
+      "Edad del propietario de hasta 30 años",
+      "Le deja al mes hasta $1.981.000",
+      "Le deja al mes más de $242.487"
+    ]
+  },
+  "restaurante_formal_local": {
+    "nivel_riesgo": "Bajo",
+    "puntajes_por_clase": {
+      "Alto": 0.1507,
+      "Medio": 0.2,
+      "Bajo": 0.6493
+    },
+    "reglas_aplicadas": [
+      "Edad del propietario mayor a 40 años",
+      "Le deja al mes más de $132.476",
+      "Edad del propietario mayor a 56 años",
+      "Le deja al mes más de $641.997"
+    ]
+  },
+  "cocina_rural_en_vivienda": {
+    "nivel_riesgo": "Medio",
+    "puntajes_por_clase": {
+      "Alto": 0.3348,
+      "Medio": 0.3445,
+      "Bajo": 0.3207
+    },
+    "reglas_aplicadas": [
+      "Edad del propietario mayor a 40 años",
+      "Le deja al mes más de $132.476",
+      "Edad del propietario de hasta 56 años",
+      "Le deja al mes hasta $794.637"
+    ]
+  }
+}

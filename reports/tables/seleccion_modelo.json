@@ -1,0 +1,89 @@
+{
+  "modelo_final": "decision_tree",
+  "criterio": "Regla de una desviación estándar (aplicada solo con resultados de CV).\n\n1. Se toma el modelo con mejor F1 macro medio de CV.\n2. Se consideran estadísticamente equivalentes los modelos cuya media está\n   a menos de una desviación estándar (entre pliegues) del mejor.\n3. Entre los equivalentes se elige el más simple e interpretable\n   (regresión logística < árbol < random forest < XGBoost).",
+  "resumen_cv": [
+    {
+      "modelo": "logistic_regression",
+      "nombre": "Regresión logística",
+      "combinaciones_evaluadas": 9,
+      "mejores_hiperparametros": {
+        "C": 10.0
+      },
+      "cv_f1_macro_media": 0.4268542268025535,
+      "cv_f1_macro_desv": 0.011090093143314982,
+      "cv_balanced_accuracy_media": 0.4603677051390299,
+      "cv_balanced_accuracy_desv": 0.012218094784152785,
+      "cv_accuracy_media": 0.49285548587004246,
+      "cv_accuracy_desv": 0.015354952975452198,
+      "cv_f1_weighted_media": 0.4956106171656877,
+      "cv_f1_weighted_desv": 0.011107594698266445,
+      "train_f1_macro_media": 0.4405567281977735,
+      "segundos": 3.6
+    },
+    {
+      "modelo": "decision_tree",
+      "nombre": "Árbol de decisión",
+      "combinaciones_evaluadas": 70,
+      "mejores_hiperparametros": {
+        "criterion": "gini",
+        "max_depth": 4,
+        "min_samples_leaf": 50
+      },
+      "cv_f1_macro_media": 0.447913753731752,
+      "cv_f1_macro_desv": 0.0108492654173889,
+      "cv_balanced_accuracy_media": 0.46519337540077227,
+      "cv_balanced_accuracy_desv": 0.011988198040556324,
+      "cv_accuracy_media": 0.494021728624176,
+      "cv_accuracy_desv": 0.01206424307272311,
+      "cv_f1_weighted_media": 0.5063650379389936,
+      "cv_f1_weighted_desv": 0.01097939893505328,
+      "train_f1_macro_media": 0.4636189839728379,
+      "segundos": 12.0
+    },
+    {
+      "modelo": "random_forest",
+      "nombre": "Random Forest",
+      "combinaciones_evaluadas": 40,
+      "mejores_hiperparametros": {
+        "n_estimators": 600,
+        "min_samples_leaf": 10,
+        "max_features": 0.5,
+        "max_depth": 6
+      },
+      "cv_f1_macro_media": 0.4459846385887011,
+      "cv_f1_macro_desv": 0.007019098136283359,
+      "cv_balanced_accuracy_media": 0.4697447090520341,
+      "cv_balanced_accuracy_desv": 0.009982711961476454,
+      "cv_accuracy_media": 0.5131281707138577,
+      "cv_accuracy_desv": 0.008287931241608948,
+      "cv_f1_weighted_media": 0.5145963092449521,
+      "cv_f1_weighted_desv": 0.005603561850773513,
+      "train_f1_macro_media": 0.511965072107629,
+      "segundos": 130.7
+    },
+    {
+      "modelo": "xgboost",
+      "nombre": "XGBoost",
+      "combinaciones_evaluadas": 40,
+      "mejores_hiperparametros": {
+        "colsample_bytree": 0.6705331755251293,
+        "learning_rate": 0.014048580838867042,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "n_estimators": 362,
+        "reg_lambda": 5.705635706965203,
+        "subsample": 0.9268888800804863
+      },
+      "cv_f1_macro_media": 0.4502801649141581,
+      "cv_f1_macro_desv": 0.013318944642289627,
+      "cv_balanced_accuracy_media": 0.473888369534465,
+      "cv_balanced_accuracy_desv": 0.014706091270767392,
+      "cv_accuracy_media": 0.5154538901914648,
+      "cv_accuracy_desv": 0.013674440556668168,
+      "cv_f1_weighted_media": 0.5181866956042052,
+      "cv_f1_weighted_desv": 0.009834476303324183,
+      "train_f1_macro_media": 0.4869517934231342,
+      "segundos": 45.6
+    }
+  ]
+}

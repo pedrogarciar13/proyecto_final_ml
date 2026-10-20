@@ -1,0 +1,64 @@
+=== Regresión logística ===
+              precision    recall  f1-score   support
+
+        Alto      0.286     0.580     0.383       245
+       Medio      0.343     0.220     0.268       440
+        Bajo      0.705     0.623     0.661       820
+
+    accuracy                          0.498      1505
+   macro avg      0.444     0.474     0.438      1505
+weighted avg      0.531     0.498     0.501      1505
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['Alto', 'Medio', 'Bajo']):
+[[142  48  55]
+ [184  97 159]
+ [171 138 511]]
+
+=== Árbol de decisión ===
+              precision    recall  f1-score   support
+
+        Alto      0.320     0.457     0.376       245
+       Medio      0.325     0.334     0.330       440
+        Bajo      0.701     0.601     0.647       820
+
+    accuracy                          0.500      1505
+   macro avg      0.449     0.464     0.451      1505
+weighted avg      0.529     0.500     0.510      1505
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['Alto', 'Medio', 'Bajo']):
+[[112  81  52]
+ [135 147 158]
+ [103 224 493]]
+
+=== Random Forest ===
+              precision    recall  f1-score   support
+
+        Alto      0.305     0.539     0.389       245
+       Medio      0.387     0.286     0.329       440
+        Bajo      0.717     0.652     0.683       820
+
+    accuracy                          0.527      1505
+   macro avg      0.470     0.493     0.467      1505
+weighted avg      0.553     0.527     0.532      1505
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['Alto', 'Medio', 'Bajo']):
+[[132  54  59]
+ [162 126 152]
+ [139 146 535]]
+
+=== XGBoost ===
+              precision    recall  f1-score   support
+
+        Alto      0.310     0.576     0.403       245
+       Medio      0.385     0.284     0.327       440
+        Bajo      0.714     0.632     0.671       820
+
+    accuracy                          0.521      1505
+   macro avg      0.470     0.497     0.467      1505
+weighted avg      0.552     0.521     0.526      1505
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['Alto', 'Medio', 'Bajo']):
+[[141  50  54]
+ [162 125 153]
+ [152 150 518]]
+

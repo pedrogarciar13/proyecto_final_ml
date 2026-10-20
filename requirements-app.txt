@@ -1,0 +1,10 @@
+# Dependencias mínimas para ejecutar la API y la aplicación web (despliegue).
+fastapi==0.156.1
+uvicorn==0.54.0
+jinja2==3.1.6
+scikit-learn==1.9.1
+xgboost==3.4.1
+scipy==1.18.1
+numpy==2.5.3
+pandas==3.0.5
+joblib==1.6.0

@@ -1,0 +1,18 @@
+variable,tipo,descripcion,uso_previsto,decision,justificacion
+id_negocio,entero,Número de fila (no es dato del DANE),Ninguno,Excluida de X,Identificador de fila; no aporta información del negocio.
+meses_abierto,entero,Edad del negocio en meses (P3034),Construcción de la etiqueta,Excluida de X,Se usa exclusivamente para construir la etiqueta nivel_riesgo.
+nivel_riesgo,categórica,Alto / Medio / Bajo construida desde meses_abierto,Variable objetivo (y),Excluida de X,Es la variable objetivo.
+donde_funciona,categórica,Dónde funciona principalmente el negocio (P3053),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+como_lleva_cuentas,categórica,Principal forma de llevar las cuentas (P640),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+tiene_ayudantes,binaria,Si alguien le ayuda en el negocio (P3031),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+acepta_transferencias,binaria,Acepta transferencias o pagos por internet (P1764_3),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+tiene_nombre_comercial,binaria,Tiene nombre comercial (P3035),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+registrado_camara_comercio,binaria,Registro en Cámara de Comercio (P1055),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+tiene_RUT,binaria,Tiene RUT ante la DIAN (P1633),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+visible_desde_la_calle,categórica,Visible desde la calle: Sí / No / No aplica (P469),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+usa_internet,binaria,El negocio usa internet (P2524),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+tiene_redes_sociales,binaria,Tiene redes sociales (P1559),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+zona,categórica,Cabecera (urbana) o Rural (CLASE_TE),Predictora (X),Incluida,"Característica observable del negocio, conocida al predecir; no deriva de la etiqueta."
+edad_propietario,entero,Edad del dueño en años (P241),Predictora (X),Incluida,"Conocida al momento de predecir y no derivada de meses_abierto. Tiene correlación moderada con la antigüedad (r = 0,42): es señal legítima, no una reconstrucción de la etiqueta. Uso descriptivo; ver nota ética."
+le_deja_al_mes_COP,entero,"Lo que el negocio le deja al dueño al mes, en COP (P3072)",Predictora (X),Incluida,"Reportada por el dueño en la encuesta, disponible al predecir y no derivada de meses_abierto (Spearman 0,18). La advertencia de fuga del diccionario aplicaba al objetivo anterior (riesgo_financiero), no a nivel_riesgo."
+riesgo_financiero,categórica,Sí si le_deja_al_mes_COP < 650.000; calculada por el equipo,Ninguno,Excluida de X,Es una transformación determinística de le_deja_al_mes_COP (Sí si < $650.000); es redundante y fue creada por el equipo para otro objetivo.

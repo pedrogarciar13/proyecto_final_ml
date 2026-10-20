@@ -1,0 +1,85 @@
+{
+  "modelo_final": "decision_tree",
+  "metricas_prueba": [
+    {
+      "modelo": "logistic_regression",
+      "nombre": "Regresión logística",
+      "accuracy": 0.4983,
+      "balanced_accuracy": 0.4744,
+      "precision_macro": 0.4444,
+      "recall_macro": 0.4744,
+      "f1_macro": 0.4375,
+      "f1_weighted": 0.5012,
+      "log_loss": 0.9976,
+      "brier_medio": 0.1978
+    },
+    {
+      "modelo": "decision_tree",
+      "nombre": "Árbol de decisión",
+      "accuracy": 0.4997,
+      "balanced_accuracy": 0.4642,
+      "precision_macro": 0.4488,
+      "recall_macro": 0.4642,
+      "f1_macro": 0.4512,
+      "f1_weighted": 0.5104,
+      "log_loss": 1.005,
+      "brier_medio": 0.1999
+    },
+    {
+      "modelo": "random_forest",
+      "nombre": "Random Forest",
+      "accuracy": 0.5269,
+      "balanced_accuracy": 0.4925,
+      "precision_macro": 0.4695,
+      "recall_macro": 0.4925,
+      "f1_macro": 0.4672,
+      "f1_weighted": 0.5318,
+      "log_loss": 0.9815,
+      "brier_medio": 0.1954
+    },
+    {
+      "modelo": "xgboost",
+      "nombre": "XGBoost",
+      "accuracy": 0.5209,
+      "balanced_accuracy": 0.4971,
+      "precision_macro": 0.4697,
+      "recall_macro": 0.4971,
+      "f1_macro": 0.4667,
+      "f1_weighted": 0.5265,
+      "log_loss": 0.9807,
+      "brier_medio": 0.1952
+    },
+    {
+      "modelo": "baseline_estratificado",
+      "nombre": "Línea base: azar estratificado",
+      "accuracy": 0.4113,
+      "balanced_accuracy": 0.3308,
+      "precision_macro": 0.3308,
+      "recall_macro": 0.3308,
+      "f1_macro": 0.3308,
+      "f1_weighted": 0.4117,
+      "log_loss": 21.2191,
+      "brier_medio": 0.3925
+    },
+    {
+      "modelo": "baseline_clase_mayoritaria",
+      "nombre": "Línea base: siempre «Bajo»",
+      "accuracy": 0.5449,
+      "balanced_accuracy": 0.3333,
+      "precision_macro": 0.1816,
+      "recall_macro": 0.3333,
+      "f1_macro": 0.2351,
+      "f1_weighted": 0.3843,
+      "log_loss": 16.4053,
+      "brier_medio": 0.3034
+    }
+  ],
+  "figuras": [
+    "reports/figures/05_matrices_confusion.png",
+    "reports/figures/06_comparacion_modelos.png",
+    "reports/figures/07_f1_por_clase.png",
+    "reports/figures/08_importancia_permutacion.png",
+    "reports/figures/09_arbol_decision.png",
+    "reports/figures/10_shap_modelo_final.png"
+  ]
+}

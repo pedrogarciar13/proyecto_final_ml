@@ -1,0 +1,33 @@
+columna_transformada,importancia
+edad_propietario,0.6023038538602521
+le_deja_al_mes_COP,0.34714835033774466
+tiene_ayudantes_Sí,0.01770050036842995
+visible_desde_la_calle_No aplica,0.016680501616870073
+donde_funciona_Ambulante (calle),0.011064901381138473
+visible_desde_la_calle_Sí,0.005101892435564677
+donde_funciona_Local o tienda,0.0
+donde_funciona_A domicilio,0.0
+"como_lleva_cuentas_Cuaderno, Excel o caja",0.0
+como_lleva_cuentas_Balance o PyG,0.0
+como_lleva_cuentas_Libro diario,0.0
+como_lleva_cuentas_No lleva cuentas,0.0
+visible_desde_la_calle_No,0.0
+donde_funciona_infrequent_sklearn,0.0
+donde_funciona_En su vivienda,0.0
+donde_funciona_Finca,0.0
+zona_Rural,0.0
+zona_Cabecera (urbana),0.0
+como_lleva_cuentas_infrequent_sklearn,0.0
+tiene_ayudantes_No,0.0
+tiene_nombre_comercial_No,0.0
+tiene_nombre_comercial_Sí,0.0
+acepta_transferencias_No,0.0
+acepta_transferencias_Sí,0.0
+registrado_camara_comercio_Sí,0.0
+registrado_camara_comercio_No,0.0
+tiene_RUT_No,0.0
+tiene_RUT_Sí,0.0
+usa_internet_Sí,0.0
+usa_internet_No,0.0
+tiene_redes_sociales_Sí,0.0
+tiene_redes_sociales_No,0.0

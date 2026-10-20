@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Termómetro de Riesgo · Negocios de comida</title>
+  <meta name="description" content="Clasificador del nivel de riesgo (Alto, Medio, Bajo) de negocios de comida en Colombia, entrenado con EMICRON 2024 del DANE.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23183a5a'/%3E%3Crect x='7' y='18' width='4' height='7' rx='1.5' fill='%230ca30c'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1.5' fill='%23fab219'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1.5' fill='%23d03b3b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="/" aria-label="Inicio">
+        <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand__text">
+          <strong>Termómetro de Riesgo</strong>
+          <small>Negocios de comida · Colombia</small>
+        </span>
+      </a>
+      <div class="topbar__meta">
+        <span class="chip" id="chip-modelo">Cargando modelo…</span>
+        <span class="chip chip--muted">Datos: EMICRON 2024 · DANE</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Proyecto final · Machine Learning</p>
+      <h1>¿A qué grupo de riesgo se parece este negocio de comida?</h1>
+      <p class="hero__lead">
+        Responda 13 preguntas sobre el negocio. Un modelo entrenado con <strong>7.523 negocios reales</strong>
+        de la Encuesta de Micronegocios lo clasificará en riesgo <span class="tag tag--alto">Alto</span>,
+        <span class="tag tag--medio">Medio</span> o <span class="tag tag--bajo">Bajo</span>, según la
+        antigüedad de los negocios con características parecidas.
+      </p>
+    </section>
+
+    <div class="layout">
+      <form id="form" class="card form" novalidate aria-describedby="form-help">
+        <div class="form__head">
+          <h2>Características del negocio</h2>
+          <p id="form-help" class="muted">Todos los campos son obligatorios. No se pide la antigüedad del negocio: es lo que el modelo intenta reconocer.</p>
+        </div>
+        <div id="fields" class="form__groups" aria-live="polite">
+          <div class="skeleton" aria-hidden="true"></div>
+          <div class="skeleton" aria-hidden="true"></div>
+          <div class="skeleton" aria-hidden="true"></div>
+        </div>
+        <div class="form__error" id="form-error" role="alert" hidden></div>
+        <div class="form__actions">
+          <button type="button" class="btn btn--ghost" id="btn-example">Cargar un ejemplo</button>
+          <button type="submit" class="btn btn--primary" id="btn-submit">
+            <span class="btn__label">Clasificar negocio</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <aside class="result" id="result" aria-live="polite">
+        <div class="card result__empty" id="result-empty">
+          <div class="meter meter--idle" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <h2>El resultado aparecerá aquí</h2>
+          <p class="muted">Complete el formulario y pulse <strong>Clasificar negocio</strong>. Verá la categoría, por qué el modelo la eligió y qué tan clara es la clasificación.</p>
+        </div>
+
+        <div class="card result__card" id="result-card" hidden>
+          <p class="eyebrow">Nivel de riesgo estimado</p>
+          <div class="verdict">
+            <span class="verdict__badge" id="verdict-badge">—</span>
+            <div class="meter" id="meter" role="img" aria-label="Indicador de nivel de riesgo">
+              <span data-cls="Bajo">Bajo</span><span data-cls="Medio">Medio</span><span data-cls="Alto">Alto</span>
+            </div>
+          </div>
+          <p class="verdict__text" id="verdict-text"></p>
+
+          <h3 class="section-title">¿Qué tan clara es la clasificación?</h3>
+          <div class="scores" id="scores"></div>
+          <p class="fineprint" id="scores-note"></p>
+
+          <h3 class="section-title">Camino que siguió el modelo</h3>
+          <ol class="path" id="path"></ol>
+
+          <div class="notice" role="note">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>
+            <div>
+              <strong>Alcance de este resultado</strong>
+              <p id="scope"></p>
+            </div>
+          </div>
+
+          <div class="result__actions">
+            <button type="button" class="btn btn--ghost" id="btn-edit">Modificar datos</button>
+            <button type="button" class="btn btn--primary" id="btn-new">Nueva predicción</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="explain" aria-labelledby="como-funciona">
+      <h2 id="como-funciona">Cómo leer el resultado</h2>
+      <div class="explain__grid">
+        <article class="card mini">
+          <span class="mini__icon" aria-hidden="true">1</span>
+          <h3>La etiqueta viene de la antigüedad</h3>
+          <p>En la encuesta, cada negocio dijo hace cuántos meses abrió. El proyecto definió:
+            <span class="tag tag--alto">Alto</span> menos de 12 meses,
+            <span class="tag tag--medio">Medio</span> de 12 a 42 meses y
+            <span class="tag tag--bajo">Bajo</span> más de 42 meses.
+            Es una decisión metodológica del proyecto, no una clasificación oficial del DANE.</p>
+        </article>
+        <article class="card mini">
+          <span class="mini__icon" aria-hidden="true">2</span>
+          <h3>El modelo busca parecidos</h3>
+          <p id="explain-model">Un árbol de decisión aprende qué combinaciones de respuestas son más comunes en cada grupo. Lo que más pesa es la edad del propietario y lo que el negocio le deja al mes.</p>
+        </article>
+        <article class="card mini">
+          <span class="mini__icon" aria-hidden="true">3</span>
+          <h3>No es un pronóstico de cierre</h3>
+          <p>Todos los negocios de la encuesta estaban abiertos. El modelo acierta cerca de la mitad de las veces (F1 macro ≈ 0,45, frente a 0,33 al azar): úselo como apoyo para conversar, no para decidir.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Fuente: Departamento Administrativo Nacional de Estadística [DANE]. (2025). <em>Encuesta de Micronegocios (EMICRON) 2024</em> [Conjunto de datos].
+        Proyecto académico · Maestría en Ciencia de Datos. Herramienta con fines educativos.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', path='js/app.js') }}" defer></script>
+</body>
+</html>

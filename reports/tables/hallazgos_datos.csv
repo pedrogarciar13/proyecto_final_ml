@@ -1,0 +1,12 @@
+,valor
+registros,7523
+columnas,16
+filas_duplicadas,0
+duplicados_sin_id,19
+nulos_totales,0
+meses_abierto_igual_500,70
+ingreso_cero,155
+riesgo_financiero_igual_ingreso_lt_650k,True
+corr_pearson_meses_edad,0.4179
+corr_spearman_meses_ingreso,0.1845
+registros_sin_etiqueta,0
