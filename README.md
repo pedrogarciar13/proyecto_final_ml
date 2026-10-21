@@ -20,7 +20,7 @@ Clasificador supervisado que asigna a un negocio de comida un **nivel de riesgo 
 * **Variables que más pesan:** edad del propietario y lo que el negocio le deja al mes. Importancia predictiva ≠ causalidad.
 * El desempeño es **modesto** (≈ 0,45 de F1 macro frente a 0,33 al azar): las características disponibles explican poco de la antigüedad.
 
-Detalle completo: [`docs/informe_tecnico.md`](docs/informe_tecnico.md) · Cuaderno: [`notebooks/analisis_modelado.ipynb`](notebooks/analisis_modelado.ipynb) · Presentación: [`docs/presentacion.md`](docs/presentacion.md) · Uso de IA: [`docs/uso_ia.md`](docs/uso_ia.md)
+Detalle completo: [`docs/informe_tecnico.md`](docs/informe_tecnico.md) · Cuaderno: [`notebooks/analisis_modelado.ipynb`](notebooks/analisis_modelado.ipynb) · Presentación: [`docs/presentacion.md`](docs/presentacion.md) · Uso de IA: [`docs/uso_ia.md`](docs/uso_ia.md) · Trazabilidad de los retos R10–R18: [`docs/trazabilidad_CRISP-DM.md`](docs/trazabilidad_CRISP-DM.md) · Ficha de datos: [`docs/ficha_datos.md`](docs/ficha_datos.md) · Anexos de bonos: [`docs/anexo_A_enfoque.md`](docs/anexo_A_enfoque.md), [`docs/anexo_B_datos_reales.md`](docs/anexo_B_datos_reales.md)
 
 ## Estructura
 
@@ -102,7 +102,7 @@ Las entradas inválidas (campos vacíos, números fuera de rango, categorías de
 
 ## Despliegue
 
-**Estado actual: no desplegado.** El entorno donde se construyó el proyecto no tiene credenciales de un servicio de hosting. Se verificó:
+**Estado actual: desplegado en Render** en <https://termometro-riesgo-negocios.onrender.com/> (verificado el 20 de octubre de 2026: la página carga, `/api/predict` responde y rechaza entradas inválidas con 422). El plan gratuito de Render apaga el servicio cuando no se usa, así que la primera consulta puede tardar cerca de un minuto. Antes del despliegue se verificó:
 
 * La aplicación funciona localmente y en un entorno virtual limpio instalado solo con `requirements-app.txt`.
 * El `Dockerfile` **no** pudo probarse de punta a punta: el entorno de desarrollo bloquea la descarga de paquetes dentro de contenedores. Debe probarse con `docker build` en un equipo con internet.
@@ -121,6 +121,18 @@ Las entradas inválidas (campos vacíos, números fuera de rango, categorías de
 docker build -t termometro-riesgo .
 docker run -p 8000:8000 termometro-riesgo
 ```
+
+## Uso en LUMO (enfoque de emprendimiento)
+
+LUMO es el software para restaurantes que está construyendo Santiago Simanca. El termómetro se integra en su consola de administración como herramienta interna de prospección (integración en curso al 20 de octubre de 2026): el administrador ingresa las características de un negocio de comida, LUMO consulta `/api/predict` en Render desde una función de servidor (la API no habilita CORS para llamadas desde otro navegador) y muestra la etapa del negocio con un mensaje comercial sugerido:
+
+| Nivel del modelo | Etapa en LUMO | Mensaje sugerido |
+|---|---|---|
+| Alto | Etapa temprana | "Arranca organizado: lleva tus cuentas desde el día uno" |
+| Medio | Consolidación | "Consolida: entiende qué te deja plata y qué no" |
+| Bajo | Establecido | "Optimiza: crece con tus datos" |
+
+La etapa solo cambia el mensaje, nunca el precio ni la oferta (riesgo de discriminación por edad del propietario). Propuesta de valor, hipótesis, impacto y ruta de validación: [`docs/anexo_A_enfoque.md`](docs/anexo_A_enfoque.md).
 
 ## Limitaciones
 

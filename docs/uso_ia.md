@@ -43,3 +43,39 @@
 
 ## 7. Responsabilidad
 El equipo es responsable de entender, verificar y defender cada decisión. Se recomienda leer en orden: `docs/informe_tecnico.md` → `notebooks/analisis_modelado.ipynb` → `src/data_processing.py` → `src/train.py`.
+
+## 8. Uso de IA de Santiago Simanca
+
+| Campo | Detalle |
+|---|---|
+| Herramienta | Claude (Anthropic), en la app de Claude |
+| Para qué la usó | Conseguir y unir los datos del DANE (EMICRON 2024) y del RUES; perfilar la base; revisar el prompt y el termómetro de Pedro contra la rúbrica; redactar las secciones 1, 2, 6 y 7 del informe, la ficha de datos y los anexos A y B; armar la trazabilidad de los retos; preparar la integración del termómetro en LUMO |
+
+**Prompts principales**
+1. "Ayúdame a conseguir datos públicos reales de restaurantes en Colombia para el proyecto final y a revisar si sirven para el termómetro."
+2. "Revisa el prompt de Pedro contra las instrucciones del proyecto, prueba el termómetro y dime qué sigue."
+3. "Hagamos mi parte del informe (secciones 1, 2, 6 y 7, ficha de datos y anexos A y B) con el modelo de Pedro, orientada a que LUMO decida a quién escribirle y qué mensaje enviarle."
+4. "¿Puedo correr el modelo dentro de LUMO? Dame un prompt para integrarlo."
+
+**Qué aceptó**
+* La unión de 8 módulos de EMICRON 2024 y el filtro de negocios de comida (7.523 filas).
+* Los porcentajes y el diagnóstico de calidad calculados con código sobre el Excel (faltantes, duplicados, desbalance y tasas de cierre del RUES).
+* La lectura de los niveles del modelo como etapa del negocio para decidir el mensaje comercial.
+* La prueba independiente de que la edad del propietario explica casi todo el desempeño (F1 macro de 0,43 con edad y ganancia; 0,35 sin edad), que coincide con `reports/tables/sensibilidad_variables.csv`.
+* La estructura de los anexos y la estimación de impacto con USD 50 por cliente.
+
+**Qué descartó o corrigió**
+* Presentar el termómetro como "probabilidad de cierre a 3 años": la base solo tiene negocios abiertos.
+* Cambiar el objetivo del modelo a última hora: decidió mantener el de Pedro y ajustar la lectura para LUMO.
+* La sección de microcredenciales del bono de enfoque.
+
+**Qué verificó**
+* Las cifras de sus secciones contra el Excel y contra las tablas de `reports/tables/`.
+* El termómetro desplegado en Render con casos de prueba y entradas inválidas.
+
+**Qué puede explicar sin la herramienta**
+* Por qué el modelo no predice cierres.
+* Por qué la edad del propietario es un riesgo técnico y ético.
+* Por qué se usa F1 macro y no exactitud cuando "Alto" es solo el 16 %.
+* Por qué LUMO consulta el modelo en Render y no lo ejecuta él mismo.
+
