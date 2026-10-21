@@ -1,0 +1,15 @@
+DATOS CRUDOS · PFI LUMO
+
+1. EMICRON 2024 (DANE) — base principal
+   Archivos: BDATOS-EMICRON-Modulo_*-2024.zip (módulos descargados tal cual del DANE)
+   Origen: https://microdatos.dane.gov.co/index.php/catalog/875
+   Acceso: 15 de octubre de 2026
+   Cómo obtenerlos de nuevo: entrar al enlace, pestaña "Obtener microdatos", descargar cada módulo en CSV.
+   Archivo de trabajo derivado: BASE_1_EMICRON_2024_comida_DANE.xlsx (7.523 filas, 16 columnas)
+
+2. RUES (Confecámaras) — base de contexto
+   Origen: https://www.datos.gov.co/d/nb3d-v3n7 (licencia CC BY-SA 4.0)
+   Acceso: 13 de octubre de 2026
+   El archivo completo pesa unos 60 MB, por eso no va en el .zip.
+   Cómo obtenerlo: en el enlace, botón "Exportar" > CSV. Filtrar CIIU 5611 y fecha de matrícula 2015–2022.
+   Archivo de trabajo derivado: BASE_2_RUES_restaurantes_contexto.xlsx (106.859 filas, 10 columnas)
