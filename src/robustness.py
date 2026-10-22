@@ -2,10 +2,9 @@
 
 Uso:  python -m src.robustness   (requiere haber ejecutado src.train)
 
-1. Validación cruzada repetida (5 pliegues x 5 repeticiones) de la mejor
-   configuración de cada modelo: qué tanto varía el F1 macro con la partición.
-2. Bootstrap del conjunto de prueba (1.000 remuestreos): intervalos de
+1. Bootstrap del conjunto de prueba (1.000 remuestreos): intervalos de
    confianza del 95 % y diferencias pareadas entre modelos.
+2. Costo del error: errores entre clases vecinas y errores extremos.
 3. Umbral para la alerta «Alto»: se elige con predicciones fuera de pliegue
    del ENTRENAMIENTO (no con el test) y luego se reporta una vez en prueba.
 """
@@ -17,8 +16,8 @@ import joblib
 import numpy as np
 import pandas as pd
 from sklearn.base import clone
-from sklearn.metrics import confusion_matrix, f1_score, make_scorer, precision_score, recall_score
-from sklearn.model_selection import RepeatedStratifiedKFold, cross_val_predict, cross_validate
+from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
+from sklearn.model_selection import cross_val_predict
 from sklearn.utils.class_weight import compute_sample_weight
 
 from src import config
@@ -33,24 +32,6 @@ N_BOOT = 1000
 
 def _fit_params(spec, y):
     return {"modelo__sample_weight": compute_sample_weight("balanced", y)} if spec.uses_sample_weight else {}
-
-
-def repeated_cv(candidates, specs, X_train, y_train) -> pd.DataFrame:
-    scoring = {"f1_macro": "f1_macro", "balanced_accuracy": "balanced_accuracy"}
-    for cls, code in config.CLASS_TO_CODE.items():
-        scoring[f"f1_{cls}"] = make_scorer(f1_score, labels=[code], average="macro")
-    rkf = RepeatedStratifiedKFold(n_splits=config.CV_FOLDS, n_repeats=5, random_state=config.RANDOM_STATE)
-    rows = []
-    for spec in specs:
-        res = cross_validate(clone(candidates[spec.name]), X_train, y_train, cv=rkf, scoring=scoring,
-                             n_jobs=-1, params=_fit_params(spec, y_train))
-        row = {"modelo": spec.name, "nombre": spec.nombre_es, "evaluaciones": len(res["test_f1_macro"])}
-        for key in scoring:
-            v = res[f"test_{key}"]
-            row[f"{key}_media"], row[f"{key}_desv"] = v.mean(), v.std()
-        row["f1_macro_min"], row["f1_macro_max"] = res["test_f1_macro"].min(), res["test_f1_macro"].max()
-        rows.append(row)
-    return pd.DataFrame(rows)
 
 
 def bootstrap_test(preds: dict, y_test: np.ndarray, reference: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -133,10 +114,6 @@ def main() -> None:
     specs = get_model_specs()
     X, y = get_X_y(prepare_dataset())
     X_train, X_test, y_train, y_test = split_data(X, y)
-
-    rcv = repeated_cv(cand, specs, X_train, y_train)
-    rcv.to_csv(config.TABLES_DIR / "cv_repetida.csv", index=False)
-    print(rcv.round(4).to_string(index=False))
 
     yt = np.asarray(y_test)
     preds = {k: np.asarray(p.predict(X_test)) for k, p in cand.items()}
