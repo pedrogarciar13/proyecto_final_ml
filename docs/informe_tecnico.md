@@ -141,7 +141,7 @@ No se escalan los modelos de árboles porque no lo necesitan. No se eliminan at�
 * **CV:** `StratifiedKFold` de 5 pliegues con barajado (semilla 42), solo sobre el entrenamiento.
 * **Métrica principal:** F1 macro (pondera igual las tres clases). Se registran además balanced accuracy, accuracy y F1 ponderado.
 * **Desbalance:** `class_weight="balanced"` (logística, árbol, Random Forest) y `sample_weight` balanceado en XGBoost, calculado dentro de cada pliegue. No se usa sobremuestreo ni SMOTE.
-* **Criterio de selección (regla de una desviación estándar):** se toma el mejor F1 macro medio de CV; los modelos a menos de una desviación estándar (entre pliegues) se consideran equivalentes; entre ellos se elige el más simple e interpretable (logística < árbol < Random Forest < XGBoost). El test no interviene.
+* **Criterio de selección (regla de un error estándar; Hastie, Tibshirani y Friedman, 2009, sec. 7.10):** se toma el mejor F1 macro medio de CV y se calcula su error estándar (desviación estándar muestral de los 5 pliegues dividida por √5); los modelos con F1 macro medio mayor o igual que *mejor media − 1 error estándar* se consideran equivalentes, y entre ellos se elige el más simple e interpretable (logística < árbol < Random Forest < XGBoost). El test no interviene.
 
 ### 8.3 Sensibilidad de variables (CV en entrenamiento, modelo final)
 
@@ -175,7 +175,7 @@ Se compararon estos cuatro porque cubren un espectro de complejidad: un modelo l
 | Random Forest | 0,446 | 0,007 | 0,470 | 0,513 | 0,512 |
 | XGBoost | **0,450** | 0,013 | 0,474 | 0,516 | 0,487 |
 
-Umbral de equivalencia: 0,450 − 0,013 = 0,437. Árbol, Random Forest y XGBoost quedan dentro; la logística no. Se elige el **árbol de decisión**.
+Error estándar del mejor modelo (XGBoost): 0,0149 / √5 = 0,0067. Umbral de equivalencia: 0,4503 − 0,0067 = 0,4436. Árbol (0,4479), Random Forest (0,4460) y XGBoost quedan dentro; la logística (0,4269) no. Se elige el **árbol de decisión**.
 
 ### 10.2 Conjunto de prueba (1.505 negocios, usado una sola vez)
 | Modelo | Accuracy | Balanced acc. | Precision macro | Recall macro | **F1 macro** | F1 ponderado | Log-loss | Brier medio |
@@ -207,7 +207,7 @@ Umbral de equivalencia: 0,450 − 0,013 = 0,437. Árbol, Random Forest y XGBoost
 * **Balanced accuracy:** promedio del recall de las tres clases.
 
 ### 10.5 Justificación del modelo final
-1. En CV, el árbol (0,448) es estadísticamente equivalente al mejor modelo (XGBoost, 0,450 ± 0,013).
+1. En CV, el árbol (0,448) está a menos de un error estándar del mejor modelo (XGBoost, 0,450; error estándar 0,007).
 2. Es el modelo equivalente más simple: 4 niveles, se puede dibujar y explicar regla por regla; la aplicación muestra el camino exacto que siguió cada predicción.
 3. Es el más equilibrado en la clase difícil (Medio): precision y recall de 0,33, mientras los demás sacrifican recall de Medio (0,22–0,29).
 4. Sobreajuste bajo (F1 entrenamiento 0,464 vs CV 0,448).
@@ -312,7 +312,7 @@ Además se verificó manualmente con un navegador automatizado (Playwright/Chrom
 * Departamento Administrativo Nacional de Estadística [DANE]. (2025). *Encuesta de Micronegocios (EMICRON) 2024* [Conjunto de datos]. https://microdatos.dane.gov.co/index.php/catalog/875 — referencia tomada de la hoja LEEME del archivo del proyecto.
 * Global Entrepreneurship Monitor (GEM). Definiciones de *new business owner* (más de 3 y hasta 42 meses pagando salarios o ingresos) y *established business owner* (más de 42 meses). Ejemplos de informes que las usan: *GEM 2006 Global Results Summary*; *Global Entrepreneurship Monitor Northern Ireland Report 2014* (Invest NI). **Pendiente:** verificar en el informe original la redacción exacta y citar autor y año en APA.
 * Confecámaras. Estudio de supervivencia de empresas de la cohorte 2017 (33,5 % activas a cinco años; mayor caída en el primer año), según notas de prensa (Infobae, 16-05-2023; La República). **Pendiente:** consultar y citar el documento original de Confecámaras.
-* Hastie, T., Tibshirani, R. y Friedman, J. (2009). *The Elements of Statistical Learning* (2.ª ed.). Springer. Sección 7.10 (validación cruzada y regla de una desviación estándar).
+* Hastie, T., Tibshirani, R. y Friedman, J. (2009). *The Elements of Statistical Learning* (2.ª ed.). Springer. Sección 7.10 (validación cruzada y regla de un error estándar).
 * Chapman, P. et al. (2000). *CRISP-DM 1.0: Step-by-step data mining guide*. SPSS.
 * Documentación de scikit-learn 1.9 y XGBoost 3.4 (APIs de `Pipeline`, `ColumnTransformer`, `OneHotEncoder`, `GridSearchCV`, `permutation_importance`, `XGBClassifier`).
 

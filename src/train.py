@@ -72,22 +72,29 @@ def summarize_search(spec: ModelSpec, search) -> dict:
     for m in SCORING:
         summary[f"cv_{m}_media"] = float(best[f"mean_test_{m}"])
         summary[f"cv_{m}_desv"] = float(best[f"std_test_{m}"])
+    # Error estándar de la media del F1 macro: desviación estándar muestral
+    # de los k pliegues dividida por raíz de k (usado en la regla de selección).
+    folds = np.array([best[f"split{i}_test_f1_macro"] for i in range(config.CV_FOLDS)])
+    summary["cv_f1_macro_ee"] = float(folds.std(ddof=1) / np.sqrt(config.CV_FOLDS))
     summary["train_f1_macro_media"] = float(best["mean_train_f1_macro"])
     return summary
 
 
 def select_final_model(summaries: list[dict], specs: list[ModelSpec]) -> str:
-    """Regla de una desviación estándar (aplicada solo con resultados de CV).
+    """Regla de un error estándar (Hastie, Tibshirani y Friedman, 2009, sec. 7.10).
 
+    Se aplica solo con resultados de validación cruzada:
     1. Se toma el modelo con mejor F1 macro medio de CV.
-    2. Se consideran estadísticamente equivalentes los modelos cuya media está
-       a menos de una desviación estándar (entre pliegues) del mejor.
-    3. Entre los equivalentes se elige el más simple e interpretable
+    2. Se calcula el error estándar de esa media: desviación estándar muestral
+       del F1 macro en los k pliegues dividida por raíz de k.
+    3. Se consideran equivalentes los modelos cuyo F1 macro medio es mayor o
+       igual que (mejor media - un error estándar).
+    4. Entre los equivalentes se elige el más simple e interpretable
        (regresión logística < árbol < random forest < XGBoost).
     """
     rank = {s.name: s.complexity_rank for s in specs}
     best = max(summaries, key=lambda s: s["cv_f1_macro_media"])
-    threshold = best["cv_f1_macro_media"] - best["cv_f1_macro_desv"]
+    threshold = best["cv_f1_macro_media"] - best["cv_f1_macro_ee"]
     tied = [s for s in summaries if s["cv_f1_macro_media"] >= threshold]
     return min(tied, key=lambda s: rank[s["modelo"]])["modelo"]
 

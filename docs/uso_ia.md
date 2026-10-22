@@ -22,7 +22,8 @@
 
 ## 4. Resultados aceptados, modificados o rechazados durante el trabajo
 * **Rechazado:** adoptar automáticamente el corte ilustrativo 12/36 del enunciado (cae sobre un pico de respuestas "3 años").
-* **Modificado:** la primera regla de selección de modelo combinaba F1 macro, balanced accuracy y complejidad, y elegía Random Forest. Se reemplazó por la regla estándar de una desviación estándar (más simple de defender), que elige el árbol. El cambio se hizo con resultados de **validación cruzada únicamente**, antes de evaluar en el conjunto de prueba. Se deja constancia porque es una decisión tomada después de ver resultados de CV.
+* **Modificado:** la primera regla de selección de modelo combinaba F1 macro, balanced accuracy y complejidad, y elegía Random Forest. Se reemplazó por una regla de una desviación estándar, que elige el árbol, usando solo resultados de validación cruzada y antes de evaluar en el conjunto de prueba.
+* **Corregido por revisión:** se señaló que la «regla de una desviación estándar» no coincidía con la regla de un error estándar de Hastie, Tibshirani y Friedman (2009), que se citaba. El código y los textos se corrigieron para usar el error estándar de la media (desviación estándar muestral de los 5 pliegues dividida por √5). El modelo elegido no cambió.
 * **Rechazado:** usar `riesgo_financiero` como predictora (redundante con el ingreso).
 * **Mantenido pese a un resultado de test desfavorable:** en prueba, Random Forest y XGBoost superan al árbol por 0,016 de F1 macro; no se cambió el modelo para no ajustar con el test.
 * **Corregido:** errores de programación detectados al ejecutar (un formato de texto en un gráfico, una prueba que leía mal los nombres de columnas del codificador) y un resumen incorrecto de las reglas del árbol en el informe, corregido al compararlo con el archivo de reglas exportado.

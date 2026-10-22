@@ -16,7 +16,7 @@ Clasificador supervisado que asigna a un negocio de comida un **nivel de riesgo 
 | Línea base: siempre «Bajo» | — | 0,235 | 0,333 | 0,545 |
 
 * **Regla de la etiqueta:** Alto = 1–11 meses · Medio = 12–42 meses · Bajo = 43 meses o más (16 % / 29 % / 54 %).
-* **Modelo final:** árbol de decisión (profundidad 4), elegido con la *regla de una desviación estándar* sobre la CV: está estadísticamente empatado con XGBoost y es el más fácil de explicar. El test se usó una sola vez, después de elegir.
+* **Modelo final:** árbol de decisión (profundidad 4), elegido con la *regla de un error estándar* sobre la CV: su F1 macro está a menos de un error estándar del de XGBoost y es el más fácil de explicar. El test se usó una sola vez, después de elegir.
 * **Variables que más pesan:** edad del propietario y lo que el negocio le deja al mes. Importancia predictiva ≠ causalidad.
 * El desempeño es **modesto** (≈ 0,45 de F1 macro frente a 0,33 al azar): las características disponibles explican poco de la antigüedad.
 

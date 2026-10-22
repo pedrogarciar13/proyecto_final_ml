@@ -10,7 +10,7 @@ Prioridad: resultados, decisiones metodológicas y demostración. Sin código en
 | 4 | **Cómo se definió el riesgo** | Alto < 12 meses · Medio 12–42 · Bajo > 42; por qué (primer año crítico; umbral GEM de 42 meses; evitar el pico de 36); 16/29/54 % | `01_distribucion_meses_abierto.png` + barras de clases | 1:20 |
 | 5 | **Lo que el modelo NO hace** | Todos los negocios estaban abiertos → no predice cierres; "Alto" = se parece a negocios en su primer año | Recuadro de advertencia | 0:30 |
 | 6 | **Auditoría de fuga** | `meses_abierto` solo para la etiqueta; fuera `riesgo_financiero` e `id`; ingreso y edad incluidos con justificación; todo el preprocesamiento dentro del pipeline | Tabla Incluida/Excluida con colores | 1:00 |
-| 7 | **Metodología** | CRISP-DM; 80/20 estratificado; CV de 5 pliegues; F1 macro; pesos balanceados; regla de una desviación estándar | Diagrama de flujo simple | 0:50 |
+| 7 | **Metodología** | CRISP-DM; 80/20 estratificado; CV de 5 pliegues; F1 macro; pesos balanceados; regla de un error estándar | Diagrama de flujo simple | 0:50 |
 | 8 | **Resultados** | Cuatro modelos ≈ 0,44–0,47 F1 macro vs 0,33 azar; accuracy engaña ("siempre Bajo" = 0,54) | `06_comparacion_modelos.png` | 1:10 |
 | 9 | **Modelo elegido y errores** | Árbol (profundidad 4): empatado con XGBoost en CV y explicable; la clase Medio es la difícil; errores entre clases vecinas | `05_matrices_confusion.png` (solo el árbol, ampliado) | 1:00 |
 | 10 | **¿Qué mira el modelo?** | Edad del propietario y su ingreso; importancia ≠ causalidad | `08_importancia_permutacion.png` | 0:40 |
@@ -39,7 +39,7 @@ Esa advertencia era para el objetivo anterior (`riesgo_financiero`, que se calcu
 Cubren el espectro de complejidad en datos tabulares: un modelo lineal de referencia (logística), uno de reglas interpretable (árbol) y dos ensambles de árboles, *bagging* (Random Forest) y *boosting* (XGBoost).
 
 **¿Cómo eligieron el mejor?**
-Con F1 macro de validación cruzada y la regla de una desviación estándar: XGBoost fue el mejor (0,450 ± 0,013), pero el árbol (0,448) está dentro de esa variación. Entre modelos equivalentes preferimos el más simple. En el test, XGBoost y Random Forest quedaron 0,016 por encima; no cambiamos la decisión con el test para no contaminarlo.
+Con F1 macro de validación cruzada y la regla de un error estándar: XGBoost fue el mejor (0,450), con un error estándar de 0,007; el árbol (0,448) está a menos de un error estándar, así que se consideran equivalentes. Entre modelos equivalentes preferimos el más simple. En el test, XGBoost y Random Forest quedaron 0,016 por encima; no cambiamos la decisión con el test para no contaminarlo.
 
 **¿Qué significan las métricas?**
 Precision: de los que el modelo llamó "Alto", cuántos lo eran. Recall: de los "Alto" reales, cuántos encontró. F1: equilibrio de ambas. F1 macro: promedio de las tres clases, cada una con el mismo peso; por eso es justa con la clase minoritaria. Accuracy no sirve sola: decir siempre "Bajo" da 54 % de accuracy y no detecta ningún negocio en riesgo.

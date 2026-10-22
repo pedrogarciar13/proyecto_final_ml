@@ -1,6 +1,6 @@
 {
   "modelo_final": "decision_tree",
-  "criterio": "Regla de una desviación estándar (aplicada solo con resultados de CV).\n\n1. Se toma el modelo con mejor F1 macro medio de CV.\n2. Se consideran estadísticamente equivalentes los modelos cuya media está\n   a menos de una desviación estándar (entre pliegues) del mejor.\n3. Entre los equivalentes se elige el más simple e interpretable\n   (regresión logística < árbol < random forest < XGBoost).",
+  "criterio": "Regla de un error estándar (Hastie, Tibshirani y Friedman, 2009, sec. 7.10).\n\nSe aplica solo con resultados de validación cruzada:\n1. Se toma el modelo con mejor F1 macro medio de CV.\n2. Se calcula el error estándar de esa media: desviación estándar muestral\n   del F1 macro en los k pliegues dividida por raíz de k.\n3. Se consideran equivalentes los modelos cuyo F1 macro medio es mayor o\n   igual que (mejor media - un error estándar).\n4. Entre los equivalentes se elige el más simple e interpretable\n   (regresión logística < árbol < random forest < XGBoost).",
   "resumen_cv": [
     {
       "modelo": "logistic_regression",
@@ -17,8 +17,9 @@
       "cv_accuracy_desv": 0.015354952975452198,
       "cv_f1_weighted_media": 0.4956106171656877,
       "cv_f1_weighted_desv": 0.011107594698266445,
+      "cv_f1_macro_ee": 0.005545046571657491,
       "train_f1_macro_media": 0.4405567281977735,
-      "segundos": 3.6
+      "segundos": 6.7
     },
     {
       "modelo": "decision_tree",
@@ -37,8 +38,9 @@
       "cv_accuracy_desv": 0.01206424307272311,
       "cv_f1_weighted_media": 0.5063650379389936,
       "cv_f1_weighted_desv": 0.01097939893505328,
+      "cv_f1_macro_ee": 0.005424632708694449,
       "train_f1_macro_media": 0.4636189839728379,
-      "segundos": 12.0
+      "segundos": 16.4
     },
     {
       "modelo": "random_forest",
@@ -58,8 +60,9 @@
       "cv_accuracy_desv": 0.008287931241608948,
       "cv_f1_weighted_media": 0.5145963092449521,
       "cv_f1_weighted_desv": 0.005603561850773513,
+      "cv_f1_macro_ee": 0.0035095490681416796,
       "train_f1_macro_media": 0.511965072107629,
-      "segundos": 130.7
+      "segundos": 163.5
     },
     {
       "modelo": "xgboost",
@@ -82,8 +85,9 @@
       "cv_accuracy_desv": 0.013674440556668168,
       "cv_f1_weighted_media": 0.5181866956042052,
       "cv_f1_weighted_desv": 0.009834476303324183,
+      "cv_f1_macro_ee": 0.0066594723211448135,
       "train_f1_macro_media": 0.4869517934231342,
-      "segundos": 45.6
+      "segundos": 64.0
     }
   ]
 }
