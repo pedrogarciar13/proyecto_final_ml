@@ -1,0 +1,24 @@
+{
+  "umbral_elegido": 0.217,
+  "criterio": "max F2 en predicciones fuera de pliegue (train)",
+  "oof": {
+    "umbral": 0.217,
+    "precision": 0.22495657209033004,
+    "recall": 0.7936670071501533,
+    "f1": 0.3505526731333182,
+    "f2": 0.5271370420624151,
+    "alertas_pct": 57.394483217015626
+  },
+  "prueba_umbral_elegido": {
+    "precision": 0.23677884615384615,
+    "recall": 0.8040816326530612,
+    "f2": 0.543598233995585,
+    "alertas_pct": 55.28239202657807
+  },
+  "prueba_regla_por_defecto": {
+    "precision": 0.32,
+    "recall": 0.45714285714285713,
+    "f2": 0.4210526315789474,
+    "alertas_pct": 23.25581395348837
+  }
+}
