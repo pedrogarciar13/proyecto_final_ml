@@ -20,7 +20,7 @@ Clasificador supervisado que asigna a un negocio de comida un **nivel de riesgo 
 * **Variables que más pesan:** edad del propietario y lo que el negocio le deja al mes. Importancia predictiva ≠ causalidad.
 * El desempeño es **modesto** (≈ 0,45 de F1 macro frente a 0,33 al azar): las características disponibles explican poco de la antigüedad.
 
-Detalle completo: [`docs/informe_tecnico.md`](docs/informe_tecnico.md) · Cuaderno: [`notebooks/analisis_modelado.ipynb`](notebooks/analisis_modelado.ipynb) · Presentación: [`docs/presentacion.md`](docs/presentacion.md) · Uso de IA: [`docs/uso_ia.md`](docs/uso_ia.md)
+Detalle completo: [`docs/informe_tecnico.md`](docs/informe_tecnico.md) · Cuaderno: [`notebooks/analisis_modelado.ipynb`](notebooks/analisis_modelado.ipynb) · Presentación: [`docs/presentacion.md`](docs/presentacion.md) · Declaración de uso de IA: [`DECLARACION_USO_IA.md`](DECLARACION_USO_IA.md)
 
 ## Estructura
 
@@ -44,7 +44,8 @@ proyecto_final_ml/
 │   └── static/{css,js}/
 ├── reports/{figures,tables}/    # resultados generados por el código
 ├── tests/                       # pruebas automatizadas (pytest)
-├── docs/                        # informe, presentación, uso de IA
+├── docs/                        # informe técnico y guion de presentación
+├── DECLARACION_USO_IA.md        # declaración de uso de inteligencia artificial
 ├── Dockerfile · render.yaml     # despliegue
 └── requirements.txt · requirements-app.txt
 ```
