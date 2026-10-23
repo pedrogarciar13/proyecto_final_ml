@@ -163,7 +163,8 @@ def main() -> None:
         summaries.append(s)
         fitted[spec.name] = search.best_estimator_
         pd.DataFrame(search.cv_results_).to_csv(config.TABLES_DIR / f"cv_resultados_{spec.name}.csv", index=False)
-        print(f"{spec.nombre_es:22s} CV F1 macro = {s['cv_f1_macro_media']:.4f} ± {s['cv_f1_macro_desv']:.4f} "
+        print(f"{spec.nombre_es:22s} CV F1 macro = {s['cv_f1_macro_media']:.4f} "
+              f"(error estándar {s['cv_f1_macro_ee']:.4f}; desv. entre pliegues {s['cv_f1_macro_desv']:.4f}) "
               f"| bal.acc = {s['cv_balanced_accuracy_media']:.4f} | {s['mejores_hiperparametros']}")
 
     cv_table = pd.DataFrame(summaries)
@@ -172,7 +173,13 @@ def main() -> None:
     final_name = select_final_model(summaries, specs)
     final_spec = next(s for s in specs if s.name == final_name)
     final_summary = next(s for s in summaries if s["modelo"] == final_name)
-    print(f"\nModelo seleccionado por CV: {final_spec.nombre_es}")
+    best = max(summaries, key=lambda s: s["cv_f1_macro_media"])
+    limit = best["cv_f1_macro_media"] - best["cv_f1_macro_ee"]
+    print(f"\nRegla de un error estándar: mejor = {best['nombre']} ({best['cv_f1_macro_media']:.4f}); "
+          f"límite = {best['cv_f1_macro_media']:.4f} - {best['cv_f1_macro_ee']:.4f} = {limit:.4f}")
+    print("Modelos equivalentes (F1 macro >= límite):",
+          ", ".join(s["nombre"] for s in summaries if s["cv_f1_macro_media"] >= limit))
+    print(f"Modelo seleccionado por CV (el más simple de los equivalentes): {final_spec.nombre_es}")
 
     sens = sensitivity_analysis(final_spec, final_summary["mejores_hiperparametros"], X_train, y_train)
     sens.to_csv(config.TABLES_DIR / "sensibilidad_variables.csv", index=False)
