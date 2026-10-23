@@ -6,14 +6,16 @@ Clasificador supervisado que asigna a un negocio de comida un **nivel de riesgo 
 
 ## Resultados en una mirada
 
-| Modelo | F1 macro CV (5 pliegues) | F1 macro prueba | Balanced acc. prueba | Accuracy prueba |
-|---|---|---|---|---|
-| Regresión logística | 0,427 ± 0,011 | 0,438 | 0,474 | 0,498 |
-| **Árbol de decisión (final)** | **0,448 ± 0,011** | **0,451** | **0,464** | **0,500** |
-| Random Forest | 0,446 ± 0,007 | 0,467 | 0,493 | 0,527 |
-| XGBoost | 0,450 ± 0,013 | 0,467 | 0,497 | 0,521 |
-| Línea base: azar estratificado | — | 0,331 | 0,331 | 0,411 |
-| Línea base: siempre «Bajo» | — | 0,235 | 0,333 | 0,545 |
+| Modelo | F1 macro CV (media de 5 pliegues) | Error estándar CV | F1 macro prueba | Balanced acc. prueba | Accuracy prueba |
+|---|---|---|---|---|---|
+| Regresión logística | 0,4269 | 0,0055 | 0,438 | 0,474 | 0,498 |
+| **Árbol de decisión (final)** | **0,4479** | **0,0054** | **0,451** | **0,464** | **0,500** |
+| Random Forest | 0,4460 | 0,0035 | 0,467 | 0,493 | 0,527 |
+| XGBoost | 0,4503 | 0,0067 | 0,467 | 0,497 | 0,521 |
+| Línea base: azar estratificado | — | — | 0,331 | 0,331 | 0,411 |
+| Línea base: siempre «Bajo» | — | — | 0,235 | 0,333 | 0,545 |
+
+*Error estándar CV: desviación estándar muestral del F1 macro en los 5 pliegues dividida por √5. Es la medida usada para decidir qué modelos son equivalentes (límite: 0,4503 − 0,0067 = 0,4436).*
 
 * **Regla de la etiqueta:** Alto = 1–11 meses · Medio = 12–42 meses · Bajo = 43 meses o más (16 % / 29 % / 54 %).
 * **Modelo final:** árbol de decisión (profundidad 4), elegido con la *regla de un error estándar* sobre la CV: su F1 macro está a menos de un error estándar del de XGBoost y es el más fácil de explicar. El test se usó una sola vez, después de elegir.

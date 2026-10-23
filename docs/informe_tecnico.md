@@ -145,7 +145,7 @@ No se escalan los modelos de árboles porque no lo necesitan. No se eliminan at�
 
 ### 8.3 Sensibilidad de variables (CV en entrenamiento, modelo final)
 
-| Escenario | F1 macro CV |
+| Escenario | F1 macro CV (± desv. entre pliegues) |
 |---|---|
 | Todas las variables aprobadas (13) | 0,448 ± 0,011 |
 | Sin `le_deja_al_mes_COP` | 0,400 ± 0,022 |
@@ -168,12 +168,14 @@ Se compararon estos cuatro porque cubren un espectro de complejidad: un modelo l
 ## 10. Resultados
 
 ### 10.1 Validación cruzada (entrenamiento)
-| Modelo | F1 macro | Desv. | Balanced acc. | Accuracy | F1 macro en entrenamiento |
-|---|---|---|---|---|---|
-| Regresión logística | 0,427 | 0,011 | 0,460 | 0,493 | 0,441 |
-| Árbol de decisión | 0,448 | 0,011 | 0,465 | 0,494 | 0,464 |
-| Random Forest | 0,446 | 0,007 | 0,470 | 0,513 | 0,512 |
-| XGBoost | **0,450** | 0,013 | 0,474 | 0,516 | 0,487 |
+| Modelo | F1 macro | Desv. entre pliegues | Error estándar | Balanced acc. | Accuracy | F1 macro en entrenamiento |
+|---|---|---|---|---|---|---|
+| Regresión logística | 0,4269 | 0,011 | 0,0055 | 0,460 | 0,493 | 0,441 |
+| Árbol de decisión | 0,4479 | 0,011 | 0,0054 | 0,465 | 0,494 | 0,464 |
+| Random Forest | 0,4460 | 0,007 | 0,0035 | 0,470 | 0,513 | 0,512 |
+| XGBoost | **0,4503** | 0,013 | 0,0067 | 0,474 | 0,516 | 0,487 |
+
+*Desv. entre pliegues: desviación estándar del F1 macro en los 5 pliegues, calculada con n = 5; describe la variabilidad. Error estándar: desviación estándar muestral (n − 1) dividida por √5; mide la incertidumbre de la media y es el valor que usa la regla de selección.*
 
 Error estándar del mejor modelo (XGBoost): 0,0149 / √5 = 0,0067. Umbral de equivalencia: 0,4503 − 0,0067 = 0,4436. Árbol (0,4479), Random Forest (0,4460) y XGBoost quedan dentro; la logística (0,4269) no. Se elige el **árbol de decisión**.
 
